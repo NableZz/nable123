@@ -52,7 +52,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="ps" min="-2" pref="100" max="-2" attributes="0"/>
                           <Component id="id" min="-2" pref="100" max="-2" attributes="0"/>
-                          <Component id="us" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="un" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
                           <Component id="fn" min="-2" pref="100" max="-2" attributes="0"/>
                           <Component id="em" min="-2" pref="100" max="-2" attributes="0"/>
                       </Group>
@@ -99,7 +99,7 @@
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="us" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="un" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -155,7 +155,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="ps">
     </Component>
-    <Component class="javax.swing.JTextField" name="us">
+    <Component class="javax.swing.JTextField" name="un">
     </Component>
     <Component class="javax.swing.JTextField" name="em">
     </Component>

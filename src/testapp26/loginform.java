@@ -61,6 +61,11 @@ public class loginform extends javax.swing.JFrame {
         jLabel3.setText("LOGIN!");
 
         jButton1.setText("Login");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -149,6 +154,10 @@ public class loginform extends javax.swing.JFrame {
       rgf.setVisible(true);
       this.dispose();
     }//GEN-LAST:event_rgfMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments

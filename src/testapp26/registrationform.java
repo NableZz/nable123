@@ -6,6 +6,8 @@
 package testapp26;
 
 import config.dbConnector;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +22,41 @@ public class registrationform extends javax.swing.JFrame {
     public registrationform() {
         initComponents();
     }
+    
+    public static String email,usname;
+    
+    public boolean duplicateCheck(){
+        
+        dbConnector dbc = new dbConnector();
+        
+        try{
+            String query = "SELECT * FROM tbl_user  WHERE u_username = '" +un.getText()+ "' OR u_email = '" +em.getText()+ "'";
+            ResultSet resultSet = dbc.getData(query);
+            
+            if(resultSet.next()){ 
+            email = resultSet.getString("u_email");          
+            if(email.equals(em.getText())){
+                JOptionPane.showMessageDialog(null,"Email is Already used!");
+                em.setText("");
+            }
+            usname = resultSet.getString("u_username");
+            if(usname.equals(un.getText())){
+                JOptionPane.showMessageDialog(null,"Username is Already used!");
+                 un.setText("");
+            }
+            return true;
+            }else{
+            return false;
+            }
+        
+        }catch(SQLException ex){    
+            System.out.println(""+ex);
+            return false;
+        
+        }
+        
+    
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,7 +76,7 @@ public class registrationform extends javax.swing.JFrame {
         id = new javax.swing.JTextField();
         fn = new javax.swing.JTextField();
         ps = new javax.swing.JTextField();
-        us = new javax.swing.JTextField();
+        un = new javax.swing.JTextField();
         em = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         ut = new javax.swing.JComboBox<>();
@@ -105,7 +142,7 @@ public class registrationform extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ps, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(us, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(un, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(fn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(em, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
@@ -141,7 +178,7 @@ public class registrationform extends javax.swing.JFrame {
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(us, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(un, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(ps, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -168,16 +205,27 @@ public class registrationform extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       dbConnector dbc = new dbConnector();
        
-       if(dbc.insertData("INSERT INTO tbl_user (u_name, u_email, u_username, u_password, u_type, u_status)VALUES('"+fn.getText()+"','"+em.getText()+"','"+us.getText()+"','"+ps.getText()+"','"+ut.getSelectedItem()+"','Pending' ) ")){
+        if(fn.getText().isEmpty()||em.getText().isEmpty()||un.getText().isEmpty()||ps.getText().isEmpty()){
+           JOptionPane.showMessageDialog(null,"All fields are required!");
+        }else if(ps.getText().length()<8){
+        JOptionPane.showMessageDialog(null,"Password character should be 8 above!");
+        ps.setText("");
+        }else if(duplicateCheck()){
+            System.out.println("Duplicate Exist");       
+        }else{
+            dbConnector dbc = new dbConnector();
+       
+       if(dbc.insertData("INSERT INTO tbl_user (u_name, u_email, u_username, u_password, u_type, u_status)VALUES('"+fn.getText()+"','"+em.getText()+"','"+un.getText()+"','"+ps.getText()+"','"+ut.getSelectedItem()+"','Pending' ) "))
+       {
       JOptionPane.showMessageDialog(null,"Inserted Success!");
-       
-       
+          loginform lfr = new loginform();
+      lfr.setVisible(true);
+      this.dispose();
        }else{
-         JOptionPane.showMessageDialog(null,"Connection Error!");
+           JOptionPane.showMessageDialog(null,"Connection Error!");
        }
-       
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -230,7 +278,7 @@ public class registrationform extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField ps;
-    private javax.swing.JTextField us;
+    private javax.swing.JTextField un;
     private javax.swing.JComboBox<String> ut;
     // End of variables declaration//GEN-END:variables
 }
